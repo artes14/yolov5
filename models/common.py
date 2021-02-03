@@ -252,7 +252,7 @@ class Detections:
                 if show or save or render:
                     img = Image.fromarray(img.astype(np.uint8)) if isinstance(img, np.ndarray) else img  # from np
                     for *box, conf, cls in pred:  # xyxy, confidence, class
-                        # str += '%s %.2f, ' % (names[int(cls)], conf)  # label
+                        # str += '%s %.2f, ' % (names[int(cls)], conf)  # labels
                         ImageDraw.Draw(img).rectangle(box, width=4, outline=colors[int(cls) % 10])  # plot
             if pprint:
                 print(str.rstrip(', '))

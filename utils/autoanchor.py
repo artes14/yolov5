@@ -62,7 +62,7 @@ def kmean_anchors(path='./data/coco128.yaml', n=9, img_size=640, thr=4.0, gen=10
             path: path to dataset *.yaml, or a loaded dataset
             n: number of anchors
             img_size: image size used for training
-            thr: anchor-label wh ratio threshold hyperparameter hyp['anchor_t'] used for training, default=4.0
+            thr: anchor-labels wh ratio threshold hyperparameter hyp['anchor_t'] used for training, default=4.0
             gen: generations to evolve anchors using genetic algorithm
             verbose: print all results
 
@@ -104,7 +104,7 @@ def kmean_anchors(path='./data/coco128.yaml', n=9, img_size=640, thr=4.0, gen=10
     else:
         dataset = path  # dataset
 
-    # Get label wh
+    # Get labels wh
     shapes = img_size * dataset.shapes / dataset.shapes.max(1, keepdims=True)
     wh0 = np.concatenate([l[:, 3:5] * s for s, l in zip(shapes, dataset.labels)])  # wh
 

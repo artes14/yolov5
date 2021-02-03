@@ -329,7 +329,7 @@ class LoadStreams:  # multiple IP or RTSP cameras
 
 
 def img2label_paths(img_paths):
-    # Define label paths as a function of image paths
+    # Define labels paths as a function of image paths
     sa, sb = os.sep + 'images' + os.sep, os.sep + 'labels' + os.sep  # /images/, /labels/ substrings
     return [x.replace(sa, sb, 1).replace('.' + x.split('.')[-1], '.txt') for x in img_paths]
 
@@ -450,7 +450,7 @@ class LoadImagesAndLabels(Dataset):  # for training/testing
 
                 # verify labels
                 if os.path.isfile(lb_file):
-                    nf += 1  # label found
+                    nf += 1  # labels found
                     with open(lb_file, 'r') as f:
                         l = np.array([x.split() for x in f.read().strip().splitlines()], dtype=np.float32)  # labels
                     if len(l):
@@ -459,10 +459,10 @@ class LoadImagesAndLabels(Dataset):  # for training/testing
                         assert (l[:, 1:] <= 1).all(), 'non-normalized or out of bounds coordinate labels'
                         assert np.unique(l, axis=0).shape[0] == l.shape[0], 'duplicate labels'
                     else:
-                        ne += 1  # label empty
+                        ne += 1  # labels empty
                         l = np.zeros((0, 5), dtype=np.float32)
                 else:
-                    nm += 1  # label missing
+                    nm += 1  # labels missing
                     l = np.zeros((0, 5), dtype=np.float32)
                 x[im_file] = [l, shape]
             except Exception as e:
@@ -866,7 +866,7 @@ def random_perspective(img, targets=(), degrees=10, translate=.1, scale=.1, shea
     # ax[0].imshow(img[:, :, ::-1])  # base
     # ax[1].imshow(img2[:, :, ::-1])  # warped
 
-    # Transform label coordinates
+    # Transform labels coordinates
     n = len(targets)
     if n:
         # warp points

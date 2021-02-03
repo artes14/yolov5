@@ -33,7 +33,7 @@ def test(data,
          save_dir=Path(''),  # for saving images
          save_txt=False,  # for auto-labelling
          save_hybrid=False,  # for hybrid auto-labelling
-         save_conf=False,  # save auto-label confidences
+         save_conf=False,  # save auto-labels confidences
          plots=True,
          log_imgs=0,  # number of logged images
          compute_loss=None):
@@ -142,7 +142,7 @@ def test(data,
                 gn = torch.tensor(shapes[si][0])[[1, 0, 1, 0]]  # normalization gain whwh
                 for *xyxy, conf, cls in predn.tolist():
                     xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
-                    line = (cls, *xywh, conf) if save_conf else (cls, *xywh)  # label format
+                    line = (cls, *xywh, conf) if save_conf else (cls, *xywh)  # labels format
                     with open(save_dir / 'labels' / (path.stem + '.txt'), 'a') as f:
                         f.write(('%g ' * len(line)).rstrip() % line + '\n')
 
@@ -292,7 +292,7 @@ if __name__ == '__main__':
     parser.add_argument('--augment', action='store_true', help='augmented inference')
     parser.add_argument('--verbose', action='store_true', help='report mAP by class')
     parser.add_argument('--save-txt', action='store_true', help='save results to *.txt')
-    parser.add_argument('--save-hybrid', action='store_true', help='save label+prediction hybrid results to *.txt')
+    parser.add_argument('--save-hybrid', action='store_true', help='save labels+prediction hybrid results to *.txt')
     parser.add_argument('--save-conf', action='store_true', help='save confidences in --save-txt labels')
     parser.add_argument('--save-json', action='store_true', help='save a cocoapi-compatible JSON results file')
     parser.add_argument('--project', default='runs/test', help='save to project/name')

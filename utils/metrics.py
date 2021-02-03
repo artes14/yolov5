@@ -165,7 +165,7 @@ class ConfusionMatrix:
             array[array < 0.005] = np.nan  # don't annotate (would appear as 0.00)
 
             fig = plt.figure(figsize=(12, 9), tight_layout=True)
-            sn.set(font_scale=1.0 if self.nc < 50 else 0.8)  # for label size
+            sn.set(font_scale=1.0 if self.nc < 50 else 0.8)  # for labels size
             labels = (0 < len(names) < 99) and len(names) == self.nc  # apply names to ticklabels
             sn.heatmap(array, annot=self.nc < 30, annot_kws={"size": 8}, cmap='Blues', fmt='.2f', square=True,
                        xticklabels=names + ['background FN'] if labels else "auto",

@@ -8,12 +8,12 @@ from utils.torch_utils import is_parallel
 
 
 def smooth_BCE(eps=0.1):  # https://github.com/ultralytics/yolov3/issues/238#issuecomment-598028441
-    # return positive, negative label smoothing BCE targets
+    # return positive, negative labels smoothing BCE targets
     return 1.0 - 0.5 * eps, 0.5 * eps
 
 
 class BCEBlurWithLogitsLoss(nn.Module):
-    # BCEwithLogitLoss() with reduced missing label effects.
+    # BCEwithLogitLoss() with reduced missing labels effects.
     def __init__(self, alpha=0.05):
         super(BCEBlurWithLogitsLoss, self).__init__()
         self.loss_fcn = nn.BCEWithLogitsLoss(reduction='none')  # must be nn.BCEWithLogitsLoss()
@@ -22,8 +22,8 @@ class BCEBlurWithLogitsLoss(nn.Module):
     def forward(self, pred, true):
         loss = self.loss_fcn(pred, true)
         pred = torch.sigmoid(pred)  # prob from logits
-        dx = pred - true  # reduce only missing label effects
-        # dx = (pred - true).abs()  # reduce missing label and false label effects
+        dx = pred - true  # reduce only missing labels effects
+        # dx = (pred - true).abs()  # reduce missing labels and false labels effects
         alpha_factor = 1 - torch.exp((dx - 1) / (self.alpha + 1e-4))
         loss *= alpha_factor
         return loss.mean()
@@ -96,7 +96,7 @@ class ComputeLoss:
         BCEcls = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([h['cls_pw']], device=device))
         BCEobj = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([h['obj_pw']], device=device))
 
-        # Class label smoothing https://arxiv.org/pdf/1902.04103.pdf eqn 3
+        # Class labels smoothing https://arxiv.org/pdf/1902.04103.pdf eqn 3
         self.cp, self.cn = smooth_BCE(eps=0.0)
 
         # Focal loss

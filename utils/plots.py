@@ -140,7 +140,7 @@ def plot_images(images, targets, paths=None, fname='images.jpg', names=None, max
             boxes = xywh2xyxy(image_targets[:, 2:6]).T
             classes = image_targets[:, 1].astype('int')
             labels = image_targets.shape[1] == 6  # labels if no conf column
-            conf = None if labels else image_targets[:, 6]  # check for confidence presence (label vs pred)
+            conf = None if labels else image_targets[:, 6]  # check for confidence presence (labels vs pred)
 
             if boxes.shape[1]:
                 if boxes.max() <= 1.01:  # if normalized with tolerance 0.01
@@ -369,7 +369,7 @@ def plot_results_overlay(start=0, stop=0):  # from utils.plots import *; plot_re
                 y = results[j, x]
                 ax[i].plot(x, y, marker='.', label=s[j])
                 # y_smooth = butter_lowpass_filtfilt(y)
-                # ax[i].plot(x, np.gradient(y_smooth), marker='.', label=s[j])
+                # ax[i].plot(x, np.gradient(y_smooth), marker='.', labels=s[j])
 
             ax[i].set_title(t[i])
             ax[i].legend()
